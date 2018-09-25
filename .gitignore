@@ -1,0 +1,7 @@
+*.iml
+.idea/
+target/
+dependency-reduced-pom.xml
+LICENSE
+jmeter.log
+.DS_Store

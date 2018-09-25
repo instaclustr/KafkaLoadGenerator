@@ -1,0 +1,51 @@
+{
+  "variables": {
+      "profile":"instaclustr-test",
+      "region":"us-east-2"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "name":"amazon-ebs-{{user `region`}}",
+    "region": "{{user `region`}}",
+    "profile": "{{user `profile`}}",
+    "source_ami_filter": {
+      "filters": {
+      "virtualization-type": "hvm",
+      "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
+      "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+      "ami_name": "ic_kafka_loader_{{timestamp}}",
+      "tags": {
+    "Project": "ic-machina-anomalia",
+    "Name": "ic-machina-anomalia"
+      }
+  }],
+
+
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30",
+      "sudo apt-get update",
+      "sudo apt-add-repository -y ppa:webupd8team/java",
+      "sudo apt-get update",
+      "echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections",
+      "echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections",
+      "sudo apt-get install -y oracle-java8-installer",
+      "sudo apt-get install oracle-java8-set-default",
+      "wget http://www.gtlib.gatech.edu/pub/apache/jmeter/binaries/apache-jmeter-5.0.tgz",
+      "tar -xf apache-jmeter-5.0.tgz",
+      "sudo mv apache-jmeter-5.0 /opt/",
+      "sudo ln -s /opt/apache-jmeter-5.0/bin/jmeter /usr/local/bin",
+      "apt-cache search maven",
+      "sudo apt-get install maven",
+      "sudo apt-get -y install maven",
+      "sudo apt-get install git"
+    ]
+  }]
+}
