@@ -43,9 +43,11 @@
       "sudo mv apache-jmeter-5.0 /opt/",
       "sudo ln -s /opt/apache-jmeter-5.0/bin/jmeter /usr/local/bin",
       "apt-cache search maven",
-      "sudo apt-get install maven",
       "sudo apt-get -y install maven",
-      "sudo apt-get install git"
+      "git clone https://github.com/instaclustr/KafkaLoadGenerator.git",
+      "cd KafkaLoadGenerator/kafkameter",
+      "mvn package",
+      "cp target/kafkameter-0.2.0.jar /opt/apache-jmeter-5.0/lib/ext/"
     ]
   }]
 }
